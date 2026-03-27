@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Minha Área - Método Âncora</title>
+    
+    <!-- Importando Fonte Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ícones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* --- DESIGN SYSTEM: PREMIUM HIGH-CONTRAST --- */
+        :root {
+            --bg-body: #F5F4F0;       
+            --bg-card: #FFFFFF;       
+            --bg-dark: #111111;       
+            --bg-alt: #EBE7DF;        
+            
+            --text-main: #111111;     
+            --text-light: #5A5A58;    
+            --text-inverse: #FFFFFF;  
+            
+            --accent-black: #000000;
+            --accent-gold: #C29B62;   
+            --border-color: #DCD7CD;
+            
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --shadow-soft: 0 10px 25px -5px rgba(0,0,0,0.05);
+            --shadow-hard: 0 20px 40px rgba(0,0,0,0.15);
+            
+            --font-main: 'Poppins', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            background-color: var(--bg-body);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 { 
+            font-family: var(--font-main); 
+            font-weight: 700; 
+            color: var(--text-main); 
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        
+        p, span, a { font-family: var(--font-main); }
+        a { text-decoration: none; color: inherit; }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- HEADER PLATAFORMA --- */
+        header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-transform: uppercase;
+            color: var(--bg-dark);
+        }
+        .logo span {
+            font-weight: 300;
+            color: var(--accent-gold);
+        }
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-menu a {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--bg-dark);
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            background-color: var(--bg-dark);
+            color: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        /* --- DASHBOARD LAYOUT --- */
+        .dashboard-content { padding: 40px 0 80px; }
+
+        .welcome-header { margin-top: 30px; margin-bottom: 30px; } 
+        .welcome-header h1 { font-size: 2.2rem; margin-bottom: 5px; }
+        .welcome-header p { color: var(--text-light); font-size: 1.05rem; }
+
+        /* --- EBOOK / START HERE SECTION --- */
+        .start-here-card {
+            background-color: var(--bg-card);
+            border: 2px solid var(--accent-gold); 
+            border-radius: var(--radius-md);
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            box-shadow: var(--shadow-hard);
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .start-here-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--bg-dark);
+            color: var(--accent-gold);
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem;
+            flex-shrink: 0;
+        }
+        .start-here-content {
+            flex-grow: 1;
+        }
+        .start-here-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .start-here-content .warning-text {
+            color: var(--bg-dark);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+        .start-here-content p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+        .start-here-content ul {
+            list-style: none;
+            margin-top: 8px;
+        }
+        .start-here-content li {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .start-here-content li i {
+            color: var(--accent-gold);
+            font-size: 1rem;
+        }
+        .start-here-action {
+            min-width: 220px;
+        }
+
+        /* --- PROGRESS SECTION --- */
+        .progress-card {
+            background-color: var(--bg-dark);
+            color: var(--text-inverse);
+            border-radius: var(--radius-md);
+            padding: 35px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: var(--shadow-hard);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-card::after {
+            content: '\f118';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: -20px;
+            bottom: -30px;
+            font-size: 14rem;
+            color: rgba(255,255,255,0.02);
+            pointer-events: none;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+            z-index: 2;
+        }
+        .progress-info h3 { color: var(--text-inverse); font-size: 1.4rem; margin-bottom: 5px; }
+        .progress-info p { color: var(--accent-gold); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .progress-percentage {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text-inverse);
+            line-height: 1;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 12px;
+            background-color: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--accent-gold);
+            width: 0%; 
+            border-radius: 6px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- CALENDÁRIO 7 DIAS --- */
+        .calendar-tracker {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+            z-index: 2;
+            position: relative;
+            flex-wrap: wrap;
+        }
+        .day-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+        }
+        .day-circle.completed {
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(194, 155, 98, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* --- PROTOCOL LIBRARY --- */
+        .section-title { font-size: 1.8rem; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
+        .section-title i { color: var(--accent-gold); }
+        .section-subtitle { margin-top: 40px; font-size: 1.4rem; border-top: 1px solid var(--border-color); padding-top: 30px;}
+
+        .protocol-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .protocol-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 30px;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+        .protocol-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-gold);
+            box-shadow: var(--shadow-hard);
+        }
+
+        .protocol-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--bg-alt);
+            color: var(--bg-dark);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .protocol-title { font-size: 1.2rem; margin-bottom: 10px; }
+        .protocol-desc { font-size: 0.9rem; color: var(--text-light); margin-bottom: 20px; flex-grow: 1; }
+
+        .protocol-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85rem;
+            color: var(--bg-dark);
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding-top: 15px;
+            border-top: 1px solid var(--bg-alt);
+        }
+        .protocol-meta i { color: var(--accent-gold); }
+
+        /* --- BOTÕES DO CARD --- */
+        .card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-access {
+            background-color: var(--bg-dark);
+            color: var(--text-inverse);
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            transition: all 0.3s ease;
+            width: 100%;
+            border: 2px solid var(--bg-dark);
+            display: inline-block;
+        }
+        .btn-access:hover { background-color: transparent; color: var(--bg-dark); }
+
+        .btn-complete {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+        .btn-complete:hover { border-color: var(--bg-dark); color: var(--bg-dark); }
+        
+        /* Estado Concluído do Botão */
+        .btn-complete.is-completed {
+            background-color: #E6F4EA; 
+            color: #1E8E3E;
+            border-color: #1E8E3E;
+        }
+        .btn-complete.is-completed:hover {
+            background-color: #CEEAD6;
+        }
+
+        /* --- EXPERT MESSAGE SECTION --- */
+        .expert-section {
+            background-color: var(--bg-alt);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-top: 60px;
+        }
+        .expert-avatar {
+            width: 80px;
+            height: 80px;
+            background-color: var(--bg-dark);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            border: 3px solid var(--accent-gold);
+        }
+        .expert-avatar i { font-size: 2rem; color: var(--accent-gold); }
+        .expert-content h4 { font-size: 1.2rem; margin-bottom: 5px; }
+        .expert-content h5 { font-size: 0.85rem; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        .expert-content p { font-size: 0.95rem; color: var(--text-light); font-style: italic; }
+
+        /* --- MEDIA QUERIES PARA MOBILE --- */
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            .nav-menu { display: none; }
+            .welcome-header { margin-bottom: 25px; padding: 0 5px; }
+            .welcome-header h1 { font-size: 1.8rem; }
+            
+            .start-here-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+                padding: 20px; 
+                margin-bottom: 30px;
+            }
+            .start-here-action { width: 100%; }
+            .progress-card { padding: 25px 20px; margin-bottom: 40px; }
+            .protocol-grid { grid-template-columns: 1fr; gap: 25px; }
+            .protocol-card { padding: 20px; }
+            .section-title { padding: 0 5px; font-size: 1.5rem; margin-bottom: 20px; }
+
+            .expert-section { 
+                flex-direction: column; 
+                text-align: center; 
+                padding: 30px 20px; 
+                margin-top: 40px;
+            }
+            .calendar-tracker { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER INTERNO -->
+    <header>
+        <div class="container header-inner">
+            <div class="logo">ÂNCORA<span>.</span></div>
+            <div class="nav-menu">
+                <a href="#" class="active">Meus Protocolos</a>
+                <a href="#">Suporte</a>
+            </div>
+            <div class="user-profile">
+                <div class="avatar">A</div>
+                <i class="fas fa-chevron-down" style="font-size: 0.8rem; color: var(--text-light);"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="dashboard-content container">
+
+        <!-- BOAS VINDAS -->
+        <div class="welcome-header">
+            <h1>Olá, Aluno(a)!</h1>
+            <p>A sua liberdade real começa aqui, na camada mais profunda da sua mente.</p>
+        </div>
+
+        <!-- EBOOK / COMECE POR AQUI -->
+        <div class="start-here-card">
+            <div class="start-here-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div class="start-here-content">
+                <h2>Ebook: A Ciência por Trás do Método</h2>
+                <p class="warning-text">Comece pela leitura. Não pule esta etapa. ⚠️</p>
+                <p>O material introdutório vai te revelar de forma simples e direta:</p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Como a "âncora emocional" do álcool foi instalada em você</li>
+                    <li><i class="fas fa-check-circle"></i> Como as frequências Theta soltam essa âncora sem esforço</li>
+                </ul>
+            </div>
+            <div class="start-here-action">
+                <a href="#COLOQUE_O_LINK_DO_EBOOK_AQUI" class="btn-access" target="_blank">Acessar Ebook</a>
+            </div>
+        </div>
+
+        <!-- PROGRESSO INTERATIVO -->
+        <div class="progress-card">
+            <div class="progress-info">
+                <div>
+                    <p>Jornada Principal</p>
+                    <h3>Protocolo de 7 Dias</h3>
+                    <span id="next-day-text" style="font-size: 0.85rem; color: #A0A0A0;">Próximo: Dia 1</span>
+                </div>
+                <div class="progress-percentage" id="progress-text">0%</div>
+            </div>
+            
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="progress-bar"></div>
+            </div>
+
+            <!-- Calendário Visual de 7 Dias -->
+            <div class="calendar-tracker">
+                <div class="day-circle" data-day="1">1</div>
+                <div class="day-circle" data-day="2">2</div>
+                <div class="day-circle" data-day="3">3</div>
+                <div class="day-circle" data-day="4">4</div>
+                <div class="day-circle" data-day="5">5</div>
+                <div class="day-circle" data-day="6">6</div>
+                <div class="day-circle" data-day="7"><i class="fas fa-flag"></i></div>
+            </div>
+        </div>
+
+        <!-- JORNADA PRINCIPAL (DIAS 1 A 7) -->
+        <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Sua Jornada de 7 Dias</h2>
+        
+        <div class="protocol-grid">
+            
+            <!-- DIA 1 -->
+            <div class="protocol-card">
+                <div class="protocol-icon"><i class="fas fa-unlock-alt"></i></div>
+                <h3 class="protocol-title">Dia 1: Desarmando a Âncora</h3>
+                <p class="protocol-desc">O primeiro passo no subconsciente para soltar as amarras emocionais que ligam o seu cérebro ao álcool.</p>
+                <div class="protocol-meta">
+                    <span><i class="far fa-clock"></i> 18 Minutos</span>
+                    <span><i class="fas fa-wave-square"></i> Ondas Theta</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DO_DIA_1_AQUI" class="btn-access" target="_blank">Acessar Conteúdo</a>
+                    <button class="btn-complete toggle-btn" data-day="1">
+                        <i class="far fa-circle"></i> Marcar como Concluído
+                    </button>
+                </div>
+            </div>
+
+            <!-- DIA 2 -->
+            <div class="protocol-card">
+                <div class="protocol-icon"><i class="fas fa-brain"></i></div>
+                <h3 class="protocol-title">Dia 2: O Gatilho do Estresse</h3>
+                <p class="protocol-desc">Reprograme sua mente para lidar com a ansiedade, o cansaço e as pressões do dia a dia sem depender da bebida.</p>
+                <div class="protocol-meta">
+                    <span><i class="far fa-clock"></i> 22 Minutos</span>
+                    <span><i class="fas fa-headphones"></i> Subliminal</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DO_DIA_2_AQUI" class="btn-access" target="_blank">Acessar Conteúdo</a>
+                    <button class="btn-complete toggle-btn" data-day="2">
+                        <i class="far fa-circle"></i> Marcar como Concluído
+                    </button>
+                </div>
+            </div>
+
+            <!-- DIA 3 -->
+            <div class="protocol-card">
+                <div class="protocol-icon"><i class="fas fa-glass-cheers"></i></div>
+                <h3 class="protocol-title">Dia 3: A Ilusão da Celebração</h3>
+                <p class="protocol-desc">Desfaça a crença profunda de que você precisa do álcool para comemorar, relaxar no fim de semana ou se divertir.</p>
+                <div class="protocol-meta">
+                    <span><i class="far fa-clock"></i> 20 Minutos</span>
+                    <span><i class="fas fa-project-diagram"></i> Neuro-associação</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DO_DIA_3_AQUI" class="btn-access" target="_blank">Acessar Conteúdo</a>
+                    <button class="btn-complete toggle-btn" data-day="3">
+                        <i class="far fa-circle"></i> Marcar como Concluído
+                    </button>
+                </div>
+            </div>
+
+            <!-- DIA 4 -->
+            <div class="protocol-card">
+                <div class="protocol-icon"><i class="fas fa-bed"></i></div>
+                <h3 class="protocol-title">Dia 4: Reconstruindo o Sono</h3>
+                <p class="protocol-desc">Frequências específicas para ensinar seu corpo a entrar em sono profundo e reparador naturalmente, sem "apagar" com álcool.</p>
+                <div class="protocol-meta">
+                    <span><i class="far fa-clock"></i> 25 Minutos</span>
+                    <span><i class="fas fa-wave-square"></i> Ondas Delta</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DO_DIA_4_AQUI" class="btn-access" target="_blank">Acessar Conteúdo</a>
+                    <button class="btn-complete toggle-btn" data-day="4">
+                        <i class="far fa-circle"></i> Marcar como Concluído
+                    </button>
+                </div>
+            </div>
+
+            <!-- DIA 5 -->
+            <div class="protocol-card">
+                <div class="protocol-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3 class="protocol-title">Dia 5: Controle da Fissura</h3>
+                <p class="protocol-desc">Instalando âncoras mentais de calma absolutas para bloquear os impulsos e urgências inesperadas que tentam te convencer a voltar.</p>
+                <div class="protocol-meta">
+                    <span><i class="far fa-clock"></i> 15 Minutos</span>
+                    <span><i class="fas fa-anchor"></i> Âncora Mental</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DO_DIA_5_AQUI" class="btn-access" target="_blank">Acessar Conteúdo</a>
+                    <button class="btn-complete toggle-btn" data-day="5">
+                        <i class="far fa-circle"></i> Marcar como Concluído
+                    </button>
+                </div>
+            </div>
+
+            <!-- DIA 6 -->
+            <div class="protocol-card">
+                <div class="protocol-icon"><i class="fas fa-users"></i></div>
+                <h3 class="protocol-title">Dia 6: Blindagem Social</h3>
+                <p class="protocol-desc">Preparação subconsciente para estar em festas, churrascos ou perto de pessoas bebendo sem sentir inveja ou vontade de participar.</p>
+                <div class="protocol-meta">
+                    <span><i class="far fa-clock"></i> 18 Minutos</span>
+                    <span><i class="fas fa-lock"></i> Bloqueio</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DO_DIA_6_AQUI" class="btn-access" target="_blank">Acessar Conteúdo</a>
+                    <button class="btn-complete toggle-btn" data-day="6">
+                        <i class="far fa-circle"></i> Marcar como Concluído
+                    </button>
+                </div>
+            </div>
+
+            <!-- DIA 7 -->
+            <div class="protocol-card">
+                <div class="protocol-icon" style="background-color: var(--accent-gold); color: var(--bg-dark);"><i class="fas fa-award"></i></div>
+                <h3 class="protocol-title">Dia 7: A Nova Identidade</h3>
+                <p class="protocol-desc">A consolidação final. Assuma definitivamente a sua nova identidade de liberdade, sem sentir que está abrindo mão de nada.</p>
+                <div class="protocol-meta">
+                    <span><i class="far fa-clock"></i> 30 Minutos</span>
+                    <span><i class="fas fa-check-double"></i> Fixação Total</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DO_DIA_7_AQUI" class="btn-access" target="_blank">Acessar Conteúdo</a>
+                    <button class="btn-complete toggle-btn" data-day="7">
+                        <i class="far fa-circle"></i> Marcar como Concluído
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RECURSOS EXTRAS / FERRAMENTAS MICRO-SAAS -->
+        <h2 class="section-title section-subtitle"><i class="fas fa-toolbox"></i> Ferramentas e Bônus</h2>
+        <div class="protocol-grid">
+            
+            <!-- FERRAMENTA 1: Calculadora de Economia -->
+            <div class="protocol-card">
+                <div class="protocol-icon"><i class="fas fa-calculator"></i></div>
+                <h3 class="protocol-title">Calculadora de Economia</h3>
+                <p class="protocol-desc">Descubra exatamente quanto dinheiro você está salvando por semana, mês e ano ao eliminar o álcool da sua vida. O resultado é motivador.</p>
+                <div class="protocol-meta">
+                    <span><i class="fas fa-coins"></i> Economia</span>
+                    <span><i class="fas fa-chart-line"></i> Ferramenta</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DA_CALCULADORA_AQUI" class="btn-access" target="_blank">Acessar Calculadora</a>
+                </div>
+            </div>
+
+            <!-- FERRAMENTA 2: Contador de Sobriedade -->
+            <div class="protocol-card">
+                <div class="protocol-icon"><i class="fas fa-calendar-check"></i></div>
+                <h3 class="protocol-title">Contador de Sobriedade</h3>
+                <p class="protocol-desc">Acompanhe seus dias, horas e minutos de liberdade. Um marco visual do seu progresso contínuo para manter seu orgulho em alta.</p>
+                <div class="protocol-meta">
+                    <span><i class="fas fa-trophy"></i> Conquistas</span>
+                    <span><i class="fas fa-stopwatch"></i> Ferramenta</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DO_CONTADOR_AQUI" class="btn-access" target="_blank">Acessar Contador</a>
+                </div>
+            </div>
+
+            <!-- FERRAMENTA 3: Respirador SOS Anticrise -->
+            <div class="protocol-card">
+                <div class="protocol-icon"><i class="fas fa-wind"></i></div>
+                <h3 class="protocol-title">Respirador SOS Anticrise</h3>
+                <p class="protocol-desc">Uma ferramenta interativa visual de respiração guiada para acalmar rapidamente o sistema nervoso e dissolver qualquer fissura pontual.</p>
+                <div class="protocol-meta">
+                    <span><i class="fas fa-shield-alt"></i> Controle</span>
+                    <span><i class="fas fa-heartbeat"></i> Ferramenta</span>
+                </div>
+                <div class="card-actions">
+                    <a href="#COLOQUE_O_LINK_DO_RESPIRADOR_AQUI" class="btn-access" target="_blank">Acessar Respirador</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- MENSAGEM DA ESPECIALISTA -->
+        <div class="expert-section">
+            <div class="expert-avatar">
+                <i class="fas fa-brain"></i>
+            </div>
+            <div class="expert-content">
+                <h4>Mensagem do Especialista</h4>
+                <h5>Treinador Mental & Especialista em Reprogramação</h5>
+                <p>"A força de vontade pura luta contra a sua consciência, mas a âncora emocional mora no seu subconsciente. O nosso objetivo nestes 7 dias não é fazer você travar uma batalha cansativa contra o álcool, e sim dissolver a necessidade. Marque o progresso das suas sessões diariamente e deixe as frequências fazerem o trabalho pesado."</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER INTERNO -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Método Âncora. Todos os direitos reservados. Suporte: contato@metodoancora.com</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT DA BARRA DE PROGRESSO INTERATIVA -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalDays = 7;
+            // Carrega o progresso salvo ou cria um objeto vazio (alterado a chave de LocalStorage para o Método Âncora)
+            let progressData = JSON.parse(localStorage.getItem('ancora_progress_v1')) || {};
+
+            const updateUI = () => {
+                let completedCount = 0;
+
+                for (let i = 1; i <= totalDays; i++) {
+                    const isCompleted = progressData[i];
+                    if (isCompleted) completedCount++;
+
+                    // 1. Atualiza os círculos do Calendário no Topo
+                    const circle = document.querySelector(`.day-circle[data-day="${i}"]`);
+                    if (circle) {
+                        if (isCompleted) {
+                            circle.classList.add('completed');
+                        } else {
+                            circle.classList.remove('completed');
+                        }
+                    }
+
+                    // 2. Atualiza os botões nos Cards
+                    const btn = document.querySelector(`.toggle-btn[data-day="${i}"]`);
+                    if (btn) {
+                        if (isCompleted) {
+                            btn.classList.add('is-completed');
+                            btn.innerHTML = '<i class="fas fa-check-circle"></i> Concluído';
+                        } else {
+                            btn.classList.remove('is-completed');
+                            btn.innerHTML = '<i class="far fa-circle"></i> Marcar como Concluído';
+                        }
+                    }
+                }
+
+                // 3. Atualiza a Barra de Progresso e Porcentagem
+                const percentage = Math.round((completedCount / totalDays) * 100);
+                document.getElementById('progress-text').textContent = `${percentage}%`;
+                document.getElementById('progress-bar').style.width = `${percentage}%`;
+
+                // 4. Atualiza o texto "Próximo Dia"
+                const nextDayElement = document.getElementById('next-day-text');
+                if (completedCount === totalDays) {
+                    nextDayElement.innerHTML = '<i class="fas fa-trophy" style="color:var(--accent-gold);"></i> Jornada Finalizada!';
+                } else {
+                    const nextDay = completedCount + 1;
+                    nextDayElement.textContent = `Próximo: Dia ${nextDay}`;
+                }
+            };
+
+            // Adiciona os eventos de clique aos botões de marcar concluído
+            document.querySelectorAll('.toggle-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const day = e.currentTarget.getAttribute('data-day');
+                    
+                    // Alterna o status (Verdadeiro/Falso)
+                    progressData[day] = !progressData[day];
+                    
+                    // Salva no LocalStorage do navegador
+                    localStorage.setItem('ancora_progress_v1', JSON.stringify(progressData));
+                    
+                    // Atualiza a tela instantaneamente
+                    updateUI();
+                });
+            });
+
+            // Chama a função na primeira vez que a página carrega
+            updateUI();
+        });
+    </script>
+</body>
+</html>
